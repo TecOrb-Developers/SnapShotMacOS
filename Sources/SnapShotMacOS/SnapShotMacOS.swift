@@ -4,9 +4,9 @@ import AVFoundation
 
 
 public class ScreenCapture {
-    static let shareInstance = ScreenCapture()
+   // static let shareInstance = ScreenCapture()
     
-    init() {}
+  //  init() {}
     
     public var captureImage = NSImage()
     
@@ -14,13 +14,13 @@ public class ScreenCapture {
         self.captureImage = captureImage
     }
     
-   public func TakeScreensShots(folderName: String){
+     func TakeScreensShots(folderName: String)-> NSImage?{
         
         var displayCount: UInt32 = 0;
         var result = CGGetActiveDisplayList(0, nil, &displayCount)
         if (result != CGError.success) {
             print("error: \(result)")
-            return
+            return nil
         }
         let allocated = Int(displayCount)
         let activeDisplays = UnsafeMutablePointer<CGDirectDisplayID>.allocate(capacity: allocated)
@@ -28,7 +28,7 @@ public class ScreenCapture {
         
         if (result != CGError.success) {
             print("error: \(result)")
-            return
+            return nil
         }
            
         for i in 1...displayCount {
@@ -37,11 +37,14 @@ public class ScreenCapture {
             let screenShot:CGImage = CGDisplayCreateImage(activeDisplays[Int(i-1)])!
             let bitmapRep = NSBitmapImageRep(cgImage: screenShot)
             let jpegData = bitmapRep.representation(using: NSBitmapImageRep.FileType.jpeg, properties: [:])!
-            self.captureImage = NSImage(data: jpegData)!
+           // let sc = ScreenCapture()
+            return NSImage(data: jpegData)!
+           // captureImage = NSImage(data: jpegData)!
         }
+        return nil
     }
     
-    func CreateTimeStamp() -> Int32
+     func CreateTimeStamp() -> Int32
     {
         return Int32(Date().timeIntervalSince1970)
     }
