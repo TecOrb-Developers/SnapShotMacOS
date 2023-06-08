@@ -14,7 +14,7 @@ public class ScreenCapture {
         self.captureImage = captureImage
     }
     
-     func TakeScreensShots(folderName: String)-> NSImage?{
+    public func TakeScreensShots(folderName: String)-> NSImage?{
         
         var displayCount: UInt32 = 0;
         var result = CGGetActiveDisplayList(0, nil, &displayCount)
